@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="ja">
+
+  <head>
+     <script type="text/x-mathjax-config">
+
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+
+    </script>
+
+    <script type="text/javascript" async 
+
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+
+    </script>
+
+  </head>
+
+  <body>
+    <p>最小二乗法(Least Squre Method)</p>
+
+<p>計測値\(y(k)\)に対する推定値\(\hat y(k)\)を次式で与える。</p>
+\begin{align}
+\hat y(k)=a(n)x(k)~~~~(k=0,1,\cdots,n)
+\end{align}
+
+<p>次式の評価式を最小化する\(a(n)\)を求める。</p>
+\begin{align}
+S(n)=\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat y(k)-y(k)\}^2~~~~~~~(0<\lambda<1) \label{eq:EvmEqn}
+\end{align}
+
+<p>ここに、\(\lambda\)は忘却係数と呼ばれる。過去の計測値の影響を小さくするこによってパラメータの変化に対応することに有効である。
+式\eqref{eq:EvmEqn}には次式の漸化式が成立する。</p>
+\begin{align}
+S(n)=S(n-1)+\lambda e(n-1)^2\label{eq:EvmEqn2}
+\end{align}
+
+式\eqref{eq:EvmEqn}を\(a_n\)で偏微分し、極値をとるものとする。
+\begin{align}
+\frac{\partial S(n)}{\partial a(n)}&=~\sum_{k=0}^n\lambda^{n-k}\frac{\partial \hat y(n)}{\partial a(n)}\{\hat y(k)-y(k)\}\nonumber\\
+&=~\sum_{k=0}^n\lambda^{n-k}x(k)\{\hat y(k)-y(k)\}\nonumber\\
+&=~0\nonumber
+\end{align}
+
+結局、次式が成立する。
+\begin{align}
+a(n)=\frac{q(n)}{p(n)}\label{eq:SolOfEqn}
+\end{align}
+
+ここに、
+\begin{align}
+p(n)&=~\sum_{k=0}^n\lambda^{n-k}x(k)^2\label{eq:EqnOfP}\\
+q(n)&=~\sum_{k=0}^n\lambda^{n-k}x(k)y(k)\label{eq:EqnOfQ}
+\end{align}
+
+式\eqref{eq:EqnOfP}、\eqref{eq:EqnOfQ}には次式の漸化式が成立する。
+\begin{align}
+p(n)&=~\lambda p(n-1)+x(n)^2\label{eq:EqnOfP2}\\
+q(n)&=~\lambda q(n-1)+x(n)y(n)\label{eq:EqnOfQ2}
+\end{align}
+
+式\eqref{eq:EqnOfP2}、\eqref{eq:EqnOfQ2}を式\eqref{eq:SolOfEqn}に代入すると次式が得られる。
+\begin{align}
+a(n)=\frac{\lambda q(n-1)+x(n)y(n)}{\lambda p(n-1)+x(n)^2}\label{eq:CoefEqn1}
+\end{align}
+
+式\eqref{eq:CoefEqn1}の右辺の分子と分母を\(p(n-1)\)で除し、\(a(n-1)=q(n-1)/p(n-1)\)であることに注意すれば次式が得られる。
+\begin{align}
+a(n)=\frac{\lambda a(n-1)+\frac{x(n)y(n)}{p(n-1)}}{\lambda+\frac{x(n)^2}{p(n-1)}}\label{eq:CoefEqn2}
+\end{align}
+
+式\eqref{eq:CoefEqn1})を整理すると次式が得られる。
+\begin{align}
+a(n)=a(n-1)+\frac{x(n)}{p(n)}\{y(n)-a(n-1)x(n)\}\label{eq:CoefEqn3}
+\end{align}
+
+\(p(n)\)は式\eqref{eq:EqnOfP2}により計算することができるが、\(p(n)\)の逆数\(r(n)\)を用いて式\eqref{eq:CoefEqn3}を書き換えることができる。まず、\(r(n)\)の漸化式を導く。
+\begin{align}
+r(n)&=~\frac{1}{p(n)}\nonumber\\
+&=~\frac{1}{\lambda p(n-1)+x(n)^2}\nonumber\\
+&=~\frac{1/p(n-1)}{\lambda+x(n)^2/p(n-1)}\nonumber\\
+&=~\frac{r(n-1)}{\lambda+x(n)^2r(n-1)}\nonumber
+\end{align}
+
+\(r(n)\)を用いて式\eqref{eq:CoefEqn3}は次式となる。
+\begin{align}
+a(n)&=~a(n-1)+r(n)x(n)\{y(n)-a(n-1)x(n)\}\label{eq:CoefEqn4}\\
+r(n)&=~\frac{r(n-1)}{\lambda+x(n)^2r(n-1)}\label{eq:CoefEqn5}
+\end{align}
+
+<div>多変数への拡張</div>
+計測値\(y_1(k),y_2(k)\)に対する推定値\(\hat y_1(k),\hat y_2(k)\)を次式で与える。
+\begin{align}
+\left\{
+\begin{array}{@{\,}cc}
+\hat y_1(k)&=a_{11}(n)x_1(k)+a_{12}(n)x_2(k)\\
+\hat y_2(k)&=a_{21}(n)x_1(k)+a_{22}(n)x_2(k)
+\end{array}
+\right.
+\end{align}
+
+ここに、
+\begin{align}
+\mathbf{A}(n)=\left[
+\begin{array}{@{\,}cc}
+a_{11}(n)&a_{12}(n)\\
+a_{21}(n)&a_{22}(n)
+\end{array}
+\right]
+,~~
+\mathbf{x}(n)=\left[
+\begin{array}{@{\,}l}
+x_{1}(n)\\
+x_{2}(n)
+\end{array}
+\right]
+,~~
+\hat{\mathbf{y}}(n)=\left[
+\begin{array}{@{\,}l}
+\hat y_{1}(n)\\
+\hat y_{2}(n)
+\end{array}
+\right]
+,~~
+\mathbf{y}(n)=\left[
+\begin{array}{@{\,}l}
+y_{1}(n)\\
+y_{2}(n)
+\end{array}
+\right]
+\end{align}
+
+\(\mathbf{x}(n)\)に対する\(\mathbf{y}(n)\)の推定値を次式で与える。
+\begin{align}
+\hat{\mathbf{y}}(k)=\mathbf{A}(n)\mathbf{x}(k)~~~~(k=0,1,\cdots n)\label{eq:RtnEqn}
+\end{align}
+
+\(\mathbf{A}(n)\)を決定するための評価式を次式で与える。
+\begin{align}
+S(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)\}^T\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)\}\nonumber\\
+&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\mathbf{x}(k)^T\mathbf{A}(n)^T\mathbf{A}(n)\mathbf{x}(k)+2\mathbf{y}(k)^T\mathbf{A}(n)\mathbf{x}(k)+\mathbf{y}(k)^T\mathbf{y}(k)\}\label{eq:MulEvmEqn}
+\end{align}
+ここに、\((0<\lambda<1)\)である。
+\(\mathbf{S}(n)\)の極値条件は次式で与えられる。
+\begin{align}
+\frac{\partial S(n)}{\partial {\bf A}}=\left[
+\begin{array}{@{\,}cc}
+\displaystyle\frac{\partial S(n)}{\partial a_{11}(n)}&\displaystyle\frac{\partial S(n)}{\partial a_{12}(n)}\\
+&\\
+\displaystyle\frac{\partial S(n)}{\partial a_{21}(n)}&\displaystyle\frac{\partial S(n)}{\partial a_{22}(n)}
+\end{array}
+\right]
+=
+\sum_{k=0}^{n}\lambda^{n-k}\{\mathbf{A}(n)\mathbf{x}(k)\mathbf{x}(k)^T-\mathbf{y}(k)\mathbf{x}(k)^T\}
+=
+\mathbf{O}\label{eq:ParDerEqn}
+\end{align}
+
+式\eqref{eq:RtnEqn}を代入して次式を得る。
+\begin{align}
+\mathbf{A}(n)\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T=\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T
+\end{align}
+
+\begin{align}
+\mathbf{A}(n)=\mathbf{Q}(n)\mathbf{P}(n)^{-1}\label{eq:SolOfMatA}
+\end{align}
+
+ここに、
+\begin{align}
+\mathbf{P}(n)&=~\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T\\
+\mathbf{Q}(n)&=~\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T
+\end{align}
+
+\(\mathbf{P}(n)\)、\(\mathbf{Q}(n)\)には次式の漸化式が成立する。
+\begin{align}
+\mathbf{P}(n)&=~\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\label{eq:MatP}\\
+\mathbf{Q}(n)&=~\lambda\mathbf{Q}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\label{eq:MatQ}
+\end{align}
+
+式\eqref{eq:SolOfMatA}に式\eqref{eq:MatP}と\eqref{eq:MatQ}を代入して丁寧に書き下すと次式が得られる。
+\begin{align}
+\mathbf{A}(n)&=~\{\lambda\mathbf{Q}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\}\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
+&=~\{\lambda\mathbf{Q}(n-1)\mathbf{P}(n-1)^{-1}+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}\{\lambda\mathbf{I}+\mathbf{P}(n-1)^{-1}\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
+&=~\{\lambda\mathbf{A}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}^{-1}\nonumber
+\end{align}
+
+ここで、
+\begin{align}
+\lambda\mathbf{A}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}=&~\lambda\mathbf{A}(n-1)+\mathbf{A}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}-\mathbf{A}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\nonumber\\
+=&~\mathbf{A}(n-1)\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\nonumber
+\end{align}
+
+であることに注意すると、
+\begin{align}
+\mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}^{-1}\nonumber\\
+&=~\mathbf{A}(n-1)+\{\mathbf{y}(k)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
+&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n)^{-1}\nonumber
+\end{align}
+
+結局、次式を得る。
+\begin{align}
+\mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\label{eq:IdtMatA}\\
+\mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{P}(n)^{-1}\nonumber\\
+\mathbf{P}(n)&=~\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\nonumber
+\end{align}
+
+ここで、逆行列の補助定理
+\begin{align}
+(\mathbf{A}+\mathbf{b}\mathbf{c}^T)^{-1}=\mathbf{A}^{-1}-\frac{\mathbf{A}^{-1}\mathbf{b}\mathbf{c}^T\mathbf{A}^{-1}}{1+\mathbf{c}^T\mathbf{A}^{-1}\mathbf{b}}
+\end{align}
+を用いると、
+\begin{align}
+\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}=\{\lambda\mathbf{P}(n-1)\}^{-1}-\frac{\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}}{1+\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)}
+\end{align}
+となるので、
+\begin{align}
+\mathbf{P}(n)^{-1}=\{\lambda\mathbf{P}(n-1)\}^{-1}-\frac{\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}}{1+\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)}
+\end{align}
+となる。逆行列\(\mathbf{P}(0)^{-1}\)を計算しておけば、\(\mathbf{P}(n)^{-1}\)を逐次計算することができる。さらに、
+\begin{align}
+\mathbf{R}(n)=\mathbf{P}(n)^{-1}
+\end{align}
+とおけば、
+\begin{align}
+\mathbf{R}(n)=\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)^{-1}}{\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)}
+\end{align}
+となる	。
+\begin{align}
+\mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\nonumber\\
+\mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{R}(n)\nonumber\\
+\mathbf{R}(n)&=~\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{1}{\mu}\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)\nonumber\\
+\mu&=~\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)\nonumber
+\end{align}
+
+式\eqref{eq:IdtMatA}は2変数に限定されない。すなわち、m個の変数とn個の計測値に適用することができる。
+
+</body>
+
+</html>
