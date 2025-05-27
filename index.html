@@ -17,26 +17,28 @@
 
   </head>
 
-  <body>
-    <p>最小二乗法(Least Squre Method)</p>
+<body>
+    <h3>最小二乗法(Least Squre Method)</h3>
 
-<p>計測値\(y(k)\)に対する推定値\(\hat y(k)\)を次式で与える。</p>
+<p>計測値\(y(k)\)に対する最小二乗推定値\(\hat y(k)\)を次式で与えます。</p>
 \begin{align}
 \hat y(k)=a(n)x(k)~~~~(k=0,1,\cdots,n)
 \end{align}
 
-<p>次式の評価式を最小化する\(a(n)\)を求める。</p>
+<p>次式の二乗評価式を最小化する\(a(n)\)を求めます。</p>
 \begin{align}
 S(n)=\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat y(k)-y(k)\}^2~~~~~~~(0<\lambda<1) \label{eq:EvmEqn}
 \end{align}
 
-<p>ここに、\(\lambda\)は忘却係数と呼ばれる。過去の計測値の影響を小さくするこによってパラメータの変化に対応することに有効である。
-式\eqref{eq:EvmEqn}には次式の漸化式が成立する。</p>
+<p>ここに、\(\lambda\)は忘却係数と呼ばれます。
+  過去の計測値の影響を小さくするこによってパラメータの変化に対応することに有効です。
+  式\eqref{eq:EvmEqn}には次式の漸化式が成立します。
+</p>
 \begin{align}
 S(n)=S(n-1)+\lambda e(n-1)^2\label{eq:EvmEqn2}
 \end{align}
 
-式\eqref{eq:EvmEqn}を\(a_n\)で偏微分し、極値をとるものとする。
+式\eqref{eq:EvmEqn}を\(a\)で偏微分し、極値をとるものとする。
 \begin{align}
 \frac{\partial S(n)}{\partial a(n)}&=~\sum_{k=0}^n\lambda^{n-k}\frac{\partial \hat y(n)}{\partial a(n)}\{\hat y(k)-y(k)\}\nonumber\\
 &=~\sum_{k=0}^n\lambda^{n-k}x(k)\{\hat y(k)-y(k)\}\nonumber\\
@@ -54,7 +56,11 @@ p(n)&=~\sum_{k=0}^n\lambda^{n-k}x(k)^2\label{eq:EqnOfP}\\
 q(n)&=~\sum_{k=0}^n\lambda^{n-k}x(k)y(k)\label{eq:EqnOfQ}
 \end{align}
 
-式\eqref{eq:EqnOfP}、\eqref{eq:EqnOfQ}には次式の漸化式が成立する。
+<p>式\eqref{eq:SolOfEqn}で最小二乗法による係数\(a(n)\)が決定されます。</p>
+
+<p>さて、ここからが逐次最小二乗法になります。
+  式\eqref{eq:EqnOfP}、\eqref{eq:EqnOfQ}には次式の漸化式が成立します。
+</p>
 \begin{align}
 p(n)&=~\lambda p(n-1)+x(n)^2\label{eq:EqnOfP2}\\
 q(n)&=~\lambda q(n-1)+x(n)y(n)\label{eq:EqnOfQ2}
@@ -70,7 +76,7 @@ a(n)=\frac{\lambda q(n-1)+x(n)y(n)}{\lambda p(n-1)+x(n)^2}\label{eq:CoefEqn1}
 a(n)=\frac{\lambda a(n-1)+\frac{x(n)y(n)}{p(n-1)}}{\lambda+\frac{x(n)^2}{p(n-1)}}\label{eq:CoefEqn2}
 \end{align}
 
-式\eqref{eq:CoefEqn1})を整理すると次式が得られる。
+式\eqref{eq:CoefEqn1}を整理すると次式が得られる。
 \begin{align}
 a(n)=a(n-1)+\frac{x(n)}{p(n)}\{y(n)-a(n-1)x(n)\}\label{eq:CoefEqn3}
 \end{align}
@@ -89,8 +95,8 @@ a(n)&=~a(n-1)+r(n)x(n)\{y(n)-a(n-1)x(n)\}\label{eq:CoefEqn4}\\
 r(n)&=~\frac{r(n-1)}{\lambda+x(n)^2r(n-1)}\label{eq:CoefEqn5}
 \end{align}
 
-<div>多変数への拡張</div>
-計測値\(y_1(k),y_2(k)\)に対する推定値\(\hat y_1(k),\hat y_2(k)\)を次式で与える。
+<h3>多変数への拡張</h3>
+計測値\(y_1(k),y_2(k)\)に対する最小二乗推定値\(\hat y_1(k),\hat y_2(k)\)を次式で与えます。
 \begin{align}
 \left\{
 \begin{array}{@{\,}cc}
@@ -100,7 +106,7 @@ r(n)&=~\frac{r(n-1)}{\lambda+x(n)^2r(n-1)}\label{eq:CoefEqn5}
 \right.
 \end{align}
 
-ここに、
+行列とベクトルで表記すると次式となります。
 \begin{align}
 \mathbf{A}(n)=\left[
 \begin{array}{@{\,}cc}
